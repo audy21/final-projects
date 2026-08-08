@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+openai
+pydantic
+chromadb
+langchain-openai
+langchain-core
+langgraph
+ddgs
+streamlit
+requests
