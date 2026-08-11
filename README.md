@@ -10,6 +10,14 @@ A CPaaS platform serving multiple AI capabilities through a single API — chat,
 
 → [View project](ai-api-hub/)
 
+## API Sandbox Generator
+
+Paste an OpenAPI spec and get an interactive sandbox — parsed endpoints, mock response generation with $ref resolution, and a Streamlit UI to test any endpoint.
+
+**Stack:** FastAPI, PyYAML, Streamlit
+
+→ [View project](api-sandbox/)
+
 ---
 
 _More projects coming soon._
