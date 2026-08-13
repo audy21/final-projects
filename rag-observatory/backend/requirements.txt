@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+chromadb
+rank-bm25
+sentence-transformers
+langchain-ollama
+openai
+numpy
+pyyaml
