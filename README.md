@@ -1,31 +1,27 @@
 # Final Projects
 
-Production-grade AI applications built from scratch. Each project has its own README with full documentation.
+Things I built after the fundamentals. Three working apps, each with its own README.
 
 ## AI API Hub
 
-A CPaaS platform serving multiple AI capabilities through a single API — chat, RAG, structured extraction, and autonomous research agents.
+One API for five AI capabilities — chat, document Q&A, structured extraction, and a research agent. API keys, rate limiting, and a Streamlit developer portal included.
 
 **Stack:** FastAPI, LangChain, LangGraph, ChromaDB, DeepSeek, DuckDuckGo, Streamlit
 
-→ [View project](ai-api-hub/)
+[Project details](ai-api-hub/)
 
 ## API Sandbox Generator
 
-Paste an OpenAPI spec and get an interactive sandbox — parsed endpoints, mock response generation with $ref resolution, and a Streamlit UI to test any endpoint.
+Paste an OpenAPI spec, get a sandbox to test it. Parses endpoints, generates mock responses with $ref resolution, and ships with a UI.
 
 **Stack:** FastAPI, PyYAML, Streamlit
 
-→ [View project](api-sandbox/)
+[Project details](api-sandbox/)
 
 ## RAG Pipeline Observatory
 
-Debugging tool for RAG pipelines — trace semantic search, BM25, RRF fusion, cross-encoder reranking, the final context, and the embedding space for any query. React frontend, FastAPI backend.
+See a RAG query run layer by layer — semantic search, BM25, RRF fusion, cross-encoder reranking. Then the context it produces, and where every chunk sits in embedding space.
 
 **Stack:** FastAPI, ChromaDB, rank-bm25, sentence-transformers, React, Vite, recharts
 
-→ [View project](rag-observatory/)
-
----
-
-_More projects coming soon._
+[Project details](rag-observatory/)
