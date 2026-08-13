@@ -1,6 +1,6 @@
 # Final Projects
 
-Things I built after the fundamentals. Three working apps, each with its own README.
+Things I built after the fundamentals. Four working apps, each with its own README.
 
 ## AI API Hub
 
@@ -25,3 +25,11 @@ See a RAG query run layer by layer — semantic search, BM25, RRF fusion, cross-
 **Stack:** FastAPI, ChromaDB, rank-bm25, sentence-transformers, React, Vite, recharts
 
 [Project details](rag-observatory/)
+
+## Support Copilot
+
+Knowledge-base support chat with confidence-gated escalation. Streams answers grounded in company docs, hands off to a human when confidence is low, and tracks feedback in a live analytics dashboard.
+
+**Stack:** FastAPI, ChromaDB, sentence-transformers, DeepSeek, SSE, React, Vite
+
+[Project details](support-copilot/)
