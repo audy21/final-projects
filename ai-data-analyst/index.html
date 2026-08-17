@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Analis Data — tanya database perusahaan dengan bahasa sehari-hari.">
+  <title>Analis Data</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Halaman Login -->
+  <div id="view-login" class="login-wrap">
+    <section class="login-box">
+      <h1 class="site-title">Analis Data</h1>
+      <p class="site-desc">Masuk untuk mengakses laporan perusahaan.</p>
+      <form id="login-form" class="login-form">
+        <label for="login-username" class="form-label">Username</label>
+        <input id="login-username" name="username" type="text" autocomplete="username">
+        <label for="login-password" class="form-label">Password</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password">
+        <p id="login-error" class="login-error" hidden></p>
+        <button type="submit" class="btn btn-primary">Masuk</button>
+      </form>
+      <p class="login-hint">Akun demo: admin / admin123</p>
+    </section>
+  </div>
+
+  <!-- Aplikasi Utama -->
+  <div id="view-app" hidden>
+    <header class="site-header">
+      <div>
+        <h1 class="site-title">Analis Data</h1>
+        <p class="site-desc">Ajukan pertanyaan bisnis dengan bahasa sehari-hari. Sistem mengubahnya menjadi kueri SQL dan menampilkan hasilnya.</p>
+      </div>
+      <div class="header-actions">
+        <nav class="tabs">
+          <button type="button" class="tab active" data-view="query">Tanya</button>
+          <button type="button" class="tab" data-view="settings">Database</button>
+        </nav>
+        <button type="button" id="btn-logout" class="btn btn-secondary btn-small">Keluar</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <p class="sidebar-title">Riwayat</p>
+        <ul id="history-list" class="history-list"></ul>
+        <p id="history-empty" class="history-empty">Belum ada riwayat.</p>
+      </aside>
+
+      <main class="content">
+        <!-- Panel Tanya -->
+        <section id="panel-query">
+          <!-- Status Awal -->
+          <div id="state-initial" class="state">
+            <form id="query-form" class="query-form">
+              <label for="query-input" class="form-label">Pertanyaan bisnis</label>
+              <textarea id="query-input" name="query" rows="3" placeholder="Contoh: Berapa transaksi yang sukses minggu ini?"></textarea>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div class="example-chips">
+              <p class="example-label">Coba pertanyaan:</p>
+              <button type="button" class="example-chip">Berapa transaksi yang sukses minggu ini?</button>
+              <button type="button" class="example-chip">Karyawan divisi apa saja?</button>
+              <button type="button" class="example-chip">Produk apa yang stoknya menipis?</button>
+            </div>
+          </div>
+
+          <!-- Status Loading -->
+          <div id="state-loading" class="state" hidden>
+            <p class="loading-text">Mencari data…</p>
+          </div>
+
+          <!-- Status Sukses -->
+          <div id="state-success" class="state" hidden>
+            <div id="summary-blocks" class="summary-blocks" hidden></div>
+
+            <div id="sql-box" class="sql-box" hidden>
+              <p class="sql-label">Kueri SQL</p>
+              <code id="sql-text" class="sql-text"></code>
+            </div>
+
+            <div id="chart-wrap" class="chart-wrap" hidden>
+              <canvas id="result-chart"></canvas>
+            </div>
+
+            <p id="empty-result" class="empty-result" hidden>Tidak ada data untuk pertanyaan ini.</p>
+
+            <div class="result-head">
+              <div>
+                <p class="result-label">Hasil kueri</p>
+                <p class="result-meta">Pertanyaan: “<span id="result-query"></span>” · <span id="result-count"></span> baris</p>
+              </div>
+              <div class="result-actions">
+                <button type="button" id="btn-download-chart" class="btn btn-secondary" hidden>Unduh Grafik</button>
+                <button type="button" id="btn-download" class="btn btn-primary">Unduh CSV</button>
+                <button type="button" class="btn btn-secondary" data-reset>Tanya lagi</button>
+              </div>
+            </div>
+
+            <div id="table-wrap" class="table-wrap">
+              <table id="result-table" class="result-table">
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Status Eror -->
+          <div id="state-error" class="state" hidden>
+            <div class="error-box">
+              <p class="error-title">Kesalahan</p>
+              <p id="error-message" class="error-message">Sistem gagal menemukan data untuk pertanyaan ini. Coba gunakan kata lain.</p>
+              <button type="button" class="btn btn-secondary" data-reset>Coba lagi</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Panel Pengaturan Database -->
+        <section id="panel-settings" class="state" hidden>
+          <form id="db-form" class="settings-form">
+            <p class="form-heading">Koneksi Database</p>
+            <p class="form-note">Kosongkan host untuk memakai database demo lokal (SQLite).</p>
+
+            <label for="db-host" class="form-label">Host</label>
+            <input id="db-host" name="host" type="text" placeholder="localhost">
+
+            <label for="db-port" class="form-label">Port</label>
+            <input id="db-port" name="port" type="text" placeholder="5432">
+
+            <label for="db-name" class="form-label">Nama Database</label>
+            <input id="db-name" name="dbname" type="text" placeholder="postgres">
+
+            <label for="db-username" class="form-label">Username</label>
+            <input id="db-username" name="username" type="text" placeholder="postgres">
+
+            <label for="db-password" class="form-label">Password</label>
+            <input id="db-password" name="password" type="password" placeholder="••••••••">
+
+            <button type="submit" class="btn btn-primary">Hubungkan</button>
+          </form>
+
+          <div id="db-result" class="db-result" hidden>
+            <p id="db-status" class="db-status"></p>
+            <ul id="db-tables" class="db-tables"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
