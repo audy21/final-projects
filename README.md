@@ -1,6 +1,6 @@
 # Final Projects
 
-Things I built after the fundamentals. Four working apps, each with its own README.
+Things I built after the fundamentals. Five working apps, each with its own README.
 
 ## AI API Hub
 
@@ -33,3 +33,11 @@ Knowledge-base support chat with confidence-gated escalation. Streams answers gr
 **Stack:** FastAPI, ChromaDB, sentence-transformers, DeepSeek, SSE, React, Vite
 
 [Project details](support-copilot/)
+
+## Analis Data
+
+Ask a company database questions in plain Indonesian and get SQL back. The LLM reads the actual schema, generates a SELECT, runs it, and the UI shows a table, summary numbers, and a chart it picked by itself. Login and history included.
+
+**Stack:** FastAPI, SQLite, DeepSeek, JWT, Chart.js, vanilla JavaScript
+
+[Project details](ai-data-analyst/)
