@@ -1,6 +1,6 @@
 # Final Projects
 
-Things I built after the fundamentals. Five working apps, each with its own README.
+Things I built after the fundamentals. Six working apps, each with its own README.
 
 ## AI API Hub
 
@@ -41,3 +41,11 @@ Ask a company database questions in plain Indonesian and get SQL back. The LLM r
 **Stack:** FastAPI, SQLite, DeepSeek, JWT, Chart.js, vanilla JavaScript
 
 [Project details](ai-data-analyst/)
+
+## AI Data Cleaner
+
+Upload a CSV, give cleaning instructions, and get back a cleaned file. The app previews the dataset, sends it to a generative API for cleaning code, runs the result locally, and shows before/after visuals plus a download button.
+
+**Stack:** FastAPI, Streamlit, pandas, requests
+
+[Project details](ai-data-cleaner/)
