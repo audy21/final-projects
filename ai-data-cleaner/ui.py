@@ -18,7 +18,7 @@ if uploaded_file:
         data = {"instructions": user_instructions}
         
         with st.spinner("Processing data..."):
-            response = requests.post("http://127.0.0.1:8000/clean", files=files, data=data)
+            response = requests.post("http://127.0.0.1:8000/clean", files=files, data=data, timeout=120)
         
         if response.status_code == 200:
             df_after = pd.read_csv(io.BytesIO(response.content))
@@ -53,4 +53,31 @@ if uploaded_file:
             
             st.download_button("Download Clean Data", response.content, "clean_data.csv", mime="text/csv")
         else:
-            st.error("Error processing file")
+            error_detail = "Unknown error"
+            retry_after_seconds = None
+            model_used = None
+            models_tried = None
+            try:
+                payload = response.json()
+                detail = payload.get("detail", payload)
+                if isinstance(detail, dict):
+                    error_detail = detail.get("message", str(detail))
+                    retry_after_seconds = detail.get("retry_after_seconds")
+                    model_used = detail.get("model")
+                    models_tried = detail.get("models_tried")
+                else:
+                    error_detail = detail if isinstance(detail, str) else str(detail)
+            except ValueError:
+                if response.text:
+                    error_detail = response.text
+
+            st.error(f"Error processing file (HTTP {response.status_code}): {error_detail}")
+            if isinstance(models_tried, list) and models_tried:
+                st.caption(f"Models attempted: {', '.join(models_tried)}")
+            if model_used:
+                st.caption(f"Model attempted: {model_used}")
+            if response.status_code in (429, 503):
+                if isinstance(retry_after_seconds, int) and retry_after_seconds > 0:
+                    st.info(f"Model sedang sibuk. Coba lagi sekitar {retry_after_seconds} detik.")
+                else:
+                    st.info("Model sedang sibuk. Coba lagi beberapa saat.")
