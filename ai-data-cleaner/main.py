@@ -3,11 +3,11 @@ import pandas as pd
 import requests
 
 API_KEY = os.getenv("GEMINI_API_KEY")
-URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent"
+URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
 
 def main():
     if not API_KEY:
-        raise RuntimeError("GEMINI_API_KEY is not set")
+        raise RuntimeError("API key is missing")
 
     df = pd.read_csv("dirty_data.csv")
     data_preview = df.to_string()
@@ -45,6 +45,7 @@ Return only valid Python code. Do not include markdown formatting or explanation
     
     if response.status_code != 200:
         print(response.status_code)
+        print(response.text)
         return
 
     result = response.json()

@@ -59,6 +59,10 @@ What the endpoint does (implementation details)
 - Saves uploaded file to temp_input.csv and reads it with pandas
 - Builds a prompt containing a dataset preview and the provided instructions
 - Calls an external Generative API (configured in app.py with URL and GEMINI_API_KEY)
+- Retries transient upstream failures (429/5xx) with exponential backoff + jitter
+- Uses model fallback (configurable via GEMINI_MODELS; default: gemini-2.5-flash, gemini-3.1-pro-preview) when the first model cannot serve the request
+- Validates candidate models against ModelService.ListModels to avoid unsupported/not-found fallback targets
+- If provider returns a 404 with a suggested replacement model, the app automatically tries that model next
 - Expects the API response to contain valid Python code (no markdown)
 - Strips code fences and executes the returned code with access to df and pd
 - The executed code should write out clean_data.csv; the endpoint then returns that file
@@ -73,6 +77,8 @@ Accuracy of this README
 
 Suggested next steps (optional)
 - Set GEMINI_API_KEY in your environment before running app.py
+- Optional model override:
+  - `export GEMINI_MODELS="gemini-3.7-flash,gemini-flash-latest,gemini-3.5-flash"`
 - Add a requirements.txt
 - If you want a true CLI instead of the API, implement argument parsing and local cleaning logic (no model calls)
 
