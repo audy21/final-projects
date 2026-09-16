@@ -1,6 +1,6 @@
 # Final Projects
 
-Things I built after the fundamentals. Six working apps, each with its own README.
+Things I built after the fundamentals. Seven working apps, each with its own README.
 
 ## AI API Hub
 
@@ -49,3 +49,11 @@ Upload a CSV, give cleaning instructions, and get back a cleaned file. The app p
 **Stack:** FastAPI, Streamlit, pandas, requests
 
 [Project details](ai-data-cleaner/)
+
+## Invoice Inbox
+
+Drop invoice files, let AI extract the fields, review only the ones it's unsure about. Confidence-gated auto-approval, a review queue with per-field confidence badges, spend dashboard, and CSV export.
+
+**Stack:** FastAPI, SQLite, pypdf, Ollama (llava), DeepSeek, React, Vite, recharts
+
+[Project details](invoice-inbox/)
